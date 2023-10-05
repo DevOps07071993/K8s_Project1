@@ -1,0 +1,43 @@
+Install latest awscli updated version
+AWSCLI - https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html
+#aws --version
+Install kubectl latest version
+KUBECTL - https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html
+#kubectl version
+1. Setup kubectl 
+   a. Download latest kubectl version 
+   b. Grant execution permissions to kubectl executable   
+   c. Move kubectl onto /usr/local/bin (This is the default path of unix operating system)
+   d. Test that your kubectl installation was successful
+Refer link: https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html
+#curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.21.2/2021-07-05/bin/linux/amd64/kubectl
+#chmod +x ./kubectl
+#mv ./kubectl /usr/local/bin 
+#kubectl version
+2. Setup eksctl (eksctl is the utility which helps us to setup the cluster then only we can use kubectl commands to manage our cluster)
+EKSCTL -  
+   a. Download and extract the latest release   
+   b. Move the extracted binary to /usr/local/bin   
+   c. Test that your eksclt installation was successful
+Refer Link: https://docs.aws.amazon.com/eks/latest/userguide/eksctl.html
+#curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+#sudo mv /tmp/eksctl /usr/local/bin
+#eksctl version
+Before creating cluster we need to setup IAM role and assign all executive permissions
+3. Create an IAM Role and attache it to EC2 instance  
+   IAM FULL ACCESS
+   EC2 FULL ACCESS   
+   CloudFormation FULL ACCESS
+eksctl_role - add it to bootstrap server (Bootstrap server have access to all the aws services because e have given adminidstarive access)
+From the bootstrap image i am going to create the cluster
+4. Create your cluster and nodes 
+#eksctl create cluster --name devopstraining --region us-east-1 --node-type t2.small
+
+Go and search cloudformation because eksctl is going to create environment with help of cloudformation. we could able to see cloudformation template
+we could able to see default nodes 2 and also imp file to access the kubernetes cluster whoever have this file they can communicate with our cluster to do the activities.
+cat /root/.kube/config
+This is the cloud formation template completed successfully
+goback to ec2 service - 2instances created and check with cli as well(#kubectl get nodes)
+#kubectl get nodes
+Now cluster is ready
+#kubectl get all
